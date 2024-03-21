@@ -17,7 +17,7 @@ dependencies:
   cached_network_image: ^3.3.1
   flutter_svg: ^2.0.9  
   sliding_up_panel: ^2.0.0+1
-  intl: ^0.17.0
+  intl: ^0.18.1
 
 
 dev_dependencies: 

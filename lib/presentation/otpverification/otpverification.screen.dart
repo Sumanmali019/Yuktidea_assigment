@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:yuktidea_assessment/presentation/otpverification/controllers/otpverification.controller.dart';
+import 'package:yuktidea_assessment/presentation/otpverification/widget/enter_phoen.dart';
 import '../../infrastructure/dal/models/country.dart';
 
 class OtpverificationScreen extends GetView<OtpverificationController> {
@@ -83,7 +84,10 @@ class OtpverificationScreen extends GetView<OtpverificationController> {
                         style: const TextStyle(color: Colors.white),
                       ),
                       onTap: () {
-                        Get.toNamed('/optscreen');
+                        Get.to(
+                          () => EnterPhoneNumberScreen(),
+                          arguments: {'telCode': country.telCode},
+                        );
                       },
                     );
                   },

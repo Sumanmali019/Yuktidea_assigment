@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yuktidea_assessment/infrastructure/dal/models/country.dart';
+import 'package:yuktidea_assessment/presentation/otpverification/widget/otp_input.dart';
 
 import '../../../infrastructure/dal/services/api_service.dart';
 
@@ -10,6 +12,11 @@ class OtpverificationController extends GetxController {
   int currentPage = 1;
   int perPage = 100;
   var filteredCountries = <Country>[].obs;
+
+  final RxBool isLoadingphone = false.obs;
+  final phoneController = TextEditingController();
+  final otpController = TextEditingController();
+  String telCode = '';
 
   ApiService apiService = ApiService();
   @override
@@ -57,6 +64,29 @@ class OtpverificationController extends GetxController {
       displayedCountries.addAll(countries.sublist(startIndex,
           endIndex > countries.length ? countries.length : endIndex));
       currentPage++;
+    }
+  }
+
+  void requestOtp(String telCode) async {
+    isLoadingphone(true);
+    final success = await apiService.requestOtp(telCode, phoneController.text);
+    isLoadingphone(false);
+    if (success) {
+      Get.to(() => OtpInputScreen(), arguments: {'telCode': telCode});
+    } else {
+      Get.snackbar("Error", "Failed to request OTP");
+    }
+  }
+
+  void verifyOtp() async {
+    isLoadingphone(true);
+    final success =
+        await apiService.verifyOtp(otpController.text, phoneController.text);
+    isLoadingphone(false);
+    if (success) {
+      Get.snackbar("Success", "Phone verified successfully");
+    } else {
+      Get.snackbar("Error", "OTP verification failed");
     }
   }
 }
