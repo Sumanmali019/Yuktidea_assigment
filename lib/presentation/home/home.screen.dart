@@ -9,10 +9,6 @@ class HomeScreen extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('HomeScreen'),
-        centerTitle: true,
-      ),
       body: const Center(
         child: Text(
           'HomeScreen is working',

@@ -63,7 +63,11 @@ class OtpInputScreen extends StatelessWidget {
             ),
             TextField(
               controller: controller.otpController,
-              decoration: const InputDecoration(labelText: 'Enter OTP'),
+              style: const TextStyle(color: Colors.white),
+              decoration: const InputDecoration(
+                  labelText: 'Enter OTP',
+                  hintStyle: TextStyle(color: Colors.white),
+                  labelStyle: TextStyle(color: Colors.white)),
               keyboardType: TextInputType.number,
               textAlign: TextAlign.center,
             ),
