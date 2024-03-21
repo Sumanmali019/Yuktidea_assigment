@@ -6,11 +6,10 @@ import 'package:yuktidea_assessment/infrastructure/dal/models/country.dart';
 import '../models/terms.dart';
 
 class ApiService {
-  final String _baseUrl = 'https://studylancer.yuktidea.com/api/';
-  final String baseUrl = 'https://studylancer.yuktidea.com/api';
+  final String _baseUrl = 'https://studylancer.yuktidea.com/api';
 
   Future<TermsAndConditions> getTermsAndConditions() async {
-    var response = await http.get(Uri.parse('${_baseUrl}terms-conditions'),
+    var response = await http.get(Uri.parse('${_baseUrl}/terms-conditions'),
         headers: {'Accept': 'application/json'});
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
@@ -21,7 +20,7 @@ class ApiService {
   }
 
   Future<List<Country>> getCountries() async {
-    var response = await http.get(Uri.parse(_baseUrl + 'countries'),
+    var response = await http.get(Uri.parse(_baseUrl + '/countries'),
         headers: {'Accept': 'application/json'});
     if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);
@@ -39,39 +38,13 @@ class ApiService {
     }
   }
 
-  Future<void> studentLogin(String telCode, String phone) async {
-    Uri uri = Uri.parse('$_baseUrl/student/login');
-    var response = await http.post(
-      uri,
-      headers: {
-        'Accept': 'application/json',
-      },
-      body: {
-        'tel_code': telCode,
-        'phone': phone,
-      },
-    );
-
-    if (response.statusCode == 200) {
-      // Assuming the response contains some data you might want to use
-      var data = jsonDecode(response.body);
-      // Handle the data or pass it along
-      print(data);
-    } else {
-      // Handle the error
-      throw Exception(
-          'Failed to login student. Status code: ${response.statusCode}');
-    }
-  }
-
   Future<bool> requestOtp(String telCode, String phone) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/student/login'), // Make sure this is the correct URL
+      Uri.parse('$_baseUrl/student/login'),
       headers: {'Accept': 'application/json'},
       body: {'tel_code': telCode, 'phone': phone},
     );
 
-    // Log the response for debugging
     print('Status Code: ${response.statusCode}');
     print('Response Body: ${response.body}');
 
@@ -85,7 +58,7 @@ class ApiService {
 
   Future<bool> verifyOtp(String code, String phone) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/verify-otp'),
+      Uri.parse('$_baseUrl/verify-otp'),
       headers: {'Accept': 'application/json'},
       body: {'code': code, 'phone': phone},
     );

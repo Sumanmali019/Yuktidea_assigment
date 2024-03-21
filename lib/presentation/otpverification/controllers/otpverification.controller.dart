@@ -18,6 +18,37 @@ class OtpverificationController extends GetxController {
   final otpController = TextEditingController();
   String telCode = '';
 
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  bool isButtonPressed = false;
+  var isFormValid = false.obs;
+
+  void validateForm() {
+    isFormValid.value = formKey.currentState?.validate() ?? false;
+  }
+
+  var isOtpValid = false.obs;
+
+  void validateOtp(String otp) {
+    if (otp.isEmpty) {
+      isOtpValid.value = false;
+      return;
+    }
+    if (otp.contains(RegExp(r'[^\d]'))) {
+      // Checking for non-digit characters
+      isOtpValid.value = false;
+      return;
+    }
+    // Assuming 4 is the length of a valid OTP. Adjust as necessary.
+    if (otp.length != 4) {
+      isOtpValid.value = false;
+      return;
+    }
+
+    // Additional check for OTP correctness can go here, possibly involving an API call
+    // For now, let's assume it's valid if above conditions are met
+    isOtpValid.value = true;
+  }
+
   ApiService apiService = ApiService();
   @override
   void onInit() {
@@ -55,10 +86,9 @@ class OtpverificationController extends GetxController {
   }
 
   void requestOtp(String telCode) async {
-    isLoadingphone(true);
     final success = await apiService.requestOtp(telCode, phoneController.text);
     isLoadingphone(false);
-    if (success) {
+    if (success && isFormValid.value) {
       Get.to(() => OtpInputScreen(), arguments: {'telCode': telCode});
     } else {
       Get.snackbar("Error", "Failed to request OTP");

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:otp_text_field/otp_text_field.dart';
 import 'package:yuktidea_assessment/presentation/otpverification/controllers/otpverification.controller.dart';
 import 'package:yuktidea_assessment/presentation/otpverification/widget/custom_back.dart';
 import 'package:yuktidea_assessment/presentation/otpverification/widget/custon_button.dart';
@@ -21,67 +22,96 @@ class OtpInputScreen extends StatelessWidget {
       });
     }
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(41, 41, 41, 1),
-      appBar: AppBar(
+        appBar: AppBar(
+          backgroundColor: const Color.fromRGBO(41, 41, 41, 1),
+          leading: CrossIconbackButton(onPressed: () {
+            controller.phoneController.clear();
+            controller.isFormValid.value = false;
+            Get.back();
+          }),
+        ),
         backgroundColor: const Color.fromRGBO(41, 41, 41, 1),
-        leading: CrossIconbackButton(
-          onPressed: () => Get.back(),
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              // color: Colors.white,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    'Verify Number',
-                    style: TextStyle(fontSize: 24, color: Colors.white),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Align(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  // color: Colors.white,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Verify Number',
+                        style: TextStyle(
+                            fontSize: 26,
+                            color: Color.fromRGBO(255, 255, 255, 1)),
+                      ),
+                      SizedBox(
+                        height: 26,
+                      ),
+                      const Text(
+                        'Please enter the OTP received to',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Color.fromRGBO(217, 137, 106, 1),
+                        ),
+                      ),
+                      const Text(
+                        'verify your number',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Color.fromRGBO(217, 137, 106, 1),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 18,
+                      ),
+                      Image.asset('assets/images/Divider.png')
+                    ],
                   ),
-                  Text(
-                    'Please enter the OTP received to',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Color.fromRGBO(217, 137, 106, 1),
-                    ),
-                  ),
-                  Text(
-                    'verify your number',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Color.fromRGBO(217, 137, 106, 1),
-                    ),
-                  ),
-                  Image.asset('assets/images/Divider.png')
-                ],
-              ),
+                ),
+                OTPTextField(
+                    otpFieldStyle: OtpFieldStyle(
+                        focusBorderColor: Colors.white,
+                        enabledBorderColor: Colors.white,
+                        borderColor: Colors.white,
+                        disabledBorderColor: Colors.white),
+                    // controller: controller.otpController,
+                    length: 4,
+                    style: const TextStyle(
+                        color: Color.fromRGBO(255, 255, 255, 1)),
+                    width: MediaQuery.of(context).size.width,
+                    textFieldAlignment: MainAxisAlignment.spaceAround,
+                    fieldWidth: 45,
+                    // fieldStyle: FieldStyle.box,
+                    outlineBorderRadius: 15,
+                    onChanged: (pin) {
+                      controller.otpController.text = pin;
+                      controller.validateOtp(pin);
+                    },
+                    onCompleted: (pin) {
+                      controller.validateOtp(pin);
+                    }),
+                Obx(() => CustomButton(
+                      buttonText: 'Verify',
+                      onTap: () {
+                        if (controller.isOtpValid.value &&
+                            !controller.isLoadingphone.value) {
+                          controller.verifyOtp(telCode!);
+                        }
+                      },
+                      color: controller.isOtpValid.value
+                          ? const Color.fromRGBO(249, 211, 180, 1)
+                          : const Color.fromRGBO(249, 211, 180, 0.4),
+                    )),
+                SizedBox(
+                  height: 20,
+                )
+              ],
             ),
-            TextField(
-              controller: controller.otpController,
-              style: const TextStyle(color: Colors.white),
-              decoration: const InputDecoration(
-                  labelText: 'Enter OTP',
-                  hintStyle: TextStyle(color: Colors.white),
-                  labelStyle: TextStyle(color: Colors.white)),
-              keyboardType: TextInputType.number,
-              textAlign: TextAlign.center,
-            ),
-            CustomButton(
-              buttonText: 'Verify',
-              onTap: () {
-                if (telCode != null) {
-                  controller.verifyOtp(telCode);
-                }
-              },
-            ),
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 }

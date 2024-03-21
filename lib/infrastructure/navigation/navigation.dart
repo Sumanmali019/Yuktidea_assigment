@@ -40,11 +40,6 @@ class Nav {
       name: Routes.OTPVERIFICATION,
       page: () => OtpverificationScreen(),
       binding: OtpverificationControllerBinding(),
-    ),
-    GetPage(
-      name: Routes.OPTSCREEN,
-      page: () => const OptscreenScreen(),
-      binding: OptscreenControllerBinding(),
-    ),
+    )
   ];
 }

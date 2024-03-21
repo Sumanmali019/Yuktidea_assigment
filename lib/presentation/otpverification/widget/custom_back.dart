@@ -20,13 +20,18 @@ class CrossIconbackButton extends StatelessWidget {
           width: 31,
           height: 31,
           decoration: BoxDecoration(
-            color: const Color.fromRGBO(41, 41, 41, 1),
+            color: const Color(0xFF212426),
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: Colors.white.withOpacity(0.3),
-                offset: const Offset(-4, -2),
-                blurRadius: 4,
+                color: Colors.black.withOpacity(0.16),
+                offset: const Offset(6, 6),
+                blurRadius: 12,
+              ),
+              BoxShadow(
+                color: Colors.white.withOpacity(0.09),
+                offset: const Offset(-6, -6),
+                blurRadius: 12,
               ),
             ],
           ),

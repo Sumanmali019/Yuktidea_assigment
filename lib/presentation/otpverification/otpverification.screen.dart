@@ -53,7 +53,11 @@ class OtpverificationScreen extends GetView<OtpverificationController> {
               if (controller.isLoading.value) {
                 return const Center(child: CircularProgressIndicator());
               } else if (controller.filteredCountries.isEmpty) {
-                return const Center(child: Text("No countries found"));
+                return const Center(
+                    child: Text(
+                  "No countries found",
+                  style: TextStyle(color: Colors.white),
+                ));
               } else {
                 return ListView.separated(
                   controller: _scrollController,

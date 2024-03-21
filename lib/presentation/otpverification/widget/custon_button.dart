@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 class CustomButton extends StatelessWidget {
   final VoidCallback? onTap;
   final String buttonText;
+  final Color color;
 
   const CustomButton({
     Key? key,
     this.onTap,
+    required this.color,
     required this.buttonText,
   }) : super(key: key);
 
@@ -16,18 +18,18 @@ class CustomButton extends StatelessWidget {
       width: 192,
       height: 59,
       decoration: BoxDecoration(
-        color: const Color(0xFF212426), // Dark background color
-        borderRadius: BorderRadius.circular(100), // Rounded corners
+        color: const Color(0xFF212426),
+        borderRadius: BorderRadius.circular(100),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.16), // Shadow color
-            offset: const Offset(6, 6), // Shadow position
-            blurRadius: 12, // Shadow blur radius
+            color: Colors.black.withOpacity(0.16),
+            offset: const Offset(6, 6),
+            blurRadius: 12,
           ),
           BoxShadow(
-            color: Colors.white.withOpacity(0.04), // White glow color
-            offset: const Offset(-6, -6), // White glow position
-            blurRadius: 12, // White glow blur radius
+            color: Colors.white.withOpacity(0.04),
+            offset: const Offset(-6, -6),
+            blurRadius: 12,
           ),
         ],
       ),
@@ -39,8 +41,8 @@ class CustomButton extends StatelessWidget {
           child: Center(
             child: Text(
               buttonText,
-              style: const TextStyle(
-                color: Color.fromRGBO(249, 211, 180, 0.4),
+              style: TextStyle(
+                color: color,
                 fontWeight: FontWeight.bold,
               ),
             ),
