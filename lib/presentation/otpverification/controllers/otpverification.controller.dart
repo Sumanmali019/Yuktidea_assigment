@@ -26,26 +26,17 @@ class OtpverificationController extends GetxController {
     isFormValid.value = formKey.currentState?.validate() ?? false;
   }
 
+  var otpErrorMessage = ''.obs;
   var isOtpValid = false.obs;
 
   void validateOtp(String otp) {
-    if (otp.isEmpty) {
+    if (otp.isEmpty || otp.contains(RegExp(r'[^\d]')) || otp.length != 4) {
       isOtpValid.value = false;
-      return;
+      otpErrorMessage.value = 'Invalid OTP. Please try again.';
+    } else {
+      isOtpValid.value = true;
+      otpErrorMessage.value = '';
     }
-    if (otp.contains(RegExp(r'[^\d]'))) {
-      // Checking for non-digit characters
-      isOtpValid.value = false;
-      return;
-    }
-    // Assuming 4 is the length of a valid OTP. Adjust as necessary.
-    if (otp.length != 4) {
-      isOtpValid.value = false;
-      return;
-    }
-
-    // Additional check for OTP correctness can go here, possibly involving an API call
-    // For now, let's assume it's valid if above conditions are met
     isOtpValid.value = true;
   }
 
@@ -95,19 +86,56 @@ class OtpverificationController extends GetxController {
     }
   }
 
-  void verifyOtp(
-    String telCode,
-  ) async {
+  // void verifyOtp(
+  //   String telCode,
+  // ) async {
+  //   isLoadingphone(true);
+  //   String fullPhoneNumber = telCode + phoneController.text;
+  //   final success =
+  //       await apiService.verifyOtp(otpController.text, fullPhoneNumber);
+  //   isLoadingphone(false);
+  //   if (success) {
+  //     Get.snackbar("Success", "Phone verified successfully");
+  //     Get.toNamed('/home');
+  //   } else {
+  //     Get.snackbar("Error", "OTP verification failed");
+  //   }
+  // }
+  // void verifyOtp(String telCode) async {
+  //   isLoadingphone(true);
+
+  //   bool isValidOtp = await apiService.verifyOtp(otpController.text, telCode);
+  //   isLoadingphone(false);
+
+  //   if (isValidOtp) {
+  //     Get.to(() => OtpInputScreen(), arguments: {'telCode': telCode});
+  //   } else {
+  //     isOtpValid.value = false;
+  //     otpErrorMessage.value = 'OTP does not match, please try again.';
+  //   }
+  // }
+
+  void verifyOtp(String telCode) async {
+    if (otpController.text.isEmpty ||
+        otpController.text.contains(RegExp(r'[^\d]')) ||
+        otpController.text.length != 4) {
+      // Pre-validation before making an API call
+      isOtpValid.value = false;
+      otpErrorMessage.value = 'Invalid OTP. Please try again.';
+      return;
+    }
+
     isLoadingphone(true);
-    String fullPhoneNumber = telCode + phoneController.text;
-    final success =
-        await apiService.verifyOtp(otpController.text, fullPhoneNumber);
+    bool isValidOtp = await apiService.verifyOtp(otpController.text, telCode);
     isLoadingphone(false);
-    if (success) {
-      Get.snackbar("Success", "Phone verified successfully");
-      Get.toNamed('/home');
+
+    if (isValidOtp) {
+      isOtpValid.value = true;
+      otpErrorMessage.value = '';
+      Get.to(() => OtpInputScreen(), arguments: {'telCode': telCode});
     } else {
-      Get.snackbar("Error", "OTP verification failed");
+      isOtpValid.value = false;
+      otpErrorMessage.value = 'OTP does not match, please try again.';
     }
   }
 }

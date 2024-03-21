@@ -76,4 +76,20 @@ class ApiService {
       return false;
     }
   }
+
+  Future<bool> resendOtp(String phone) async {
+    final response = await http.post(
+      Uri.parse('$_baseUrl/resend-otp'),
+      headers: {'Accept': 'application/json'},
+      body: {'phone': phone},
+    );
+
+    if (response.statusCode == 200) {
+      // Check the response body to determine if the OTP was successfully resent
+      final responseJson = json.decode(response.body);
+      return responseJson['status'] == true;
+    } else {
+      return false;
+    }
+  }
 }
