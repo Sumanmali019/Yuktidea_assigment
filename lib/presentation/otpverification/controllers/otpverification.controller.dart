@@ -31,11 +31,8 @@ class OtpverificationController extends GetxController {
       var countriesList = await apiService.getCountries();
       if (countriesList.isNotEmpty) {
         countries.assignAll(countriesList);
-        displayedCountries
-            .assignAll(countriesList); // Populate displayedCountries
-        filteredCountries.assignAll(
-            countriesList); // Initially, filteredCountries shows all countries
-        // No need to call loadMore() initially if we're showing all countries
+        displayedCountries.assignAll(countriesList);
+        filteredCountries.assignAll(countriesList);
       }
     } finally {
       isLoading(false);
@@ -57,16 +54,6 @@ class OtpverificationController extends GetxController {
     }
   }
 
-  void loadMore() {
-    int startIndex = (currentPage - 1) * perPage;
-    int endIndex = startIndex + perPage;
-    if (startIndex < countries.length) {
-      displayedCountries.addAll(countries.sublist(startIndex,
-          endIndex > countries.length ? countries.length : endIndex));
-      currentPage++;
-    }
-  }
-
   void requestOtp(String telCode) async {
     isLoadingphone(true);
     final success = await apiService.requestOtp(telCode, phoneController.text);
@@ -78,13 +65,17 @@ class OtpverificationController extends GetxController {
     }
   }
 
-  void verifyOtp() async {
+  void verifyOtp(
+    String telCode,
+  ) async {
     isLoadingphone(true);
+    String fullPhoneNumber = telCode + phoneController.text;
     final success =
-        await apiService.verifyOtp(otpController.text, phoneController.text);
+        await apiService.verifyOtp(otpController.text, fullPhoneNumber);
     isLoadingphone(false);
     if (success) {
       Get.snackbar("Success", "Phone verified successfully");
+      Get.toNamed('/home');
     } else {
       Get.snackbar("Error", "OTP verification failed");
     }

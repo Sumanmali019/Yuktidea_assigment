@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:yuktidea_assessment/presentation/otpverification/controllers/otpverification.controller.dart';
-import 'package:yuktidea_assessment/presentation/otpverification/widget/enter_phoen.dart';
+import 'package:yuktidea_assessment/presentation/otpverification/widget/custom_back.dart';
+import 'package:yuktidea_assessment/presentation/otpverification/widget/enter_phone.dart';
 import '../../infrastructure/dal/models/country.dart';
 
 class OtpverificationScreen extends GetView<OtpverificationController> {
@@ -12,20 +13,14 @@ class OtpverificationScreen extends GetView<OtpverificationController> {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
+    // ThemeData theme = Theme.of(context);
 
     return Scaffold(
       backgroundColor: const Color.fromRGBO(41, 41, 41, 1),
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            Get.back();
-          },
-        ),
+        leading: CrossIconbackButton(onPressed: () {
+          Get.back();
+        }),
         backgroundColor: const Color.fromRGBO(41, 41, 41, 1),
         centerTitle: true,
       ),
@@ -64,7 +59,7 @@ class OtpverificationScreen extends GetView<OtpverificationController> {
                   controller: _scrollController,
                   itemCount: controller.filteredCountries.length,
                   separatorBuilder: (context, index) =>
-                      Divider(color: theme.dividerColor),
+                      Image.asset('assets/images/Divider.png'),
                   itemBuilder: (context, index) {
                     Country country = controller.filteredCountries[index];
                     return ListTile(
@@ -85,8 +80,14 @@ class OtpverificationScreen extends GetView<OtpverificationController> {
                       ),
                       onTap: () {
                         Get.to(
-                          () => EnterPhoneNumberScreen(),
-                          arguments: {'telCode': country.telCode},
+                          () => EnterPhoneNumberScreen(
+                            telCode: country.telCode,
+                            flagUrl: country.flag,
+                          ),
+                          arguments: {
+                            'telCode': country.telCode,
+                            'flag': country.flag
+                          },
                         );
                       },
                     );
