@@ -93,24 +93,20 @@ class OtpInputScreen extends StatelessWidget {
                     },
                     onCompleted: (pin) {
                       controller.validateOtp(pin);
-                      if (controller.isOtpValid.value) {
-                        controller.verifyOtp(telCode!);
-                      }
                     }),
-                Obx(() => Text(
-                      controller.otpErrorMessage.value,
-                      style: const TextStyle(color: Colors.red),
-                    )),
                 Obx(() => CustomButton(
                       buttonText: 'Verify',
                       onTap: () {
+                        // Verify OTP only if isOtpValid is true and the button is not in the loading state
                         if (controller.isOtpValid.value &&
+                            controller.otpController.text.length == 4 &&
                             !controller.isLoadingphone.value) {
                           controller.verifyOtp(telCode!);
                         }
                       },
-                      // The button's color directly depends on an observable
-                      color: controller.isOtpValid.value
+                      // Button is enabled and changes color only if the OTP is valid and of correct length
+                      color: controller.isOtpValid.value &&
+                              controller.otpController.text.length == 4
                           ? const Color.fromRGBO(249, 211, 180, 1)
                           : const Color.fromRGBO(249, 211, 180, 0.4),
                     )),
