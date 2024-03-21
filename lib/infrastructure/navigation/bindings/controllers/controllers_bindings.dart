@@ -1,0 +1,4 @@
+export 'package:yuktidea_assessment/infrastructure/navigation/bindings/controllers/home.controller.binding.dart'; 
+export 'package:yuktidea_assessment/infrastructure/navigation/bindings/controllers/optscreen.controller.binding.dart'; 
+export 'package:yuktidea_assessment/infrastructure/navigation/bindings/controllers/otpverification.controller.binding.dart'; 
+export 'package:yuktidea_assessment/infrastructure/navigation/bindings/controllers/startup.controller.binding.dart'; 
