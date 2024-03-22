@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:yuktidea_assessment/presentation/screens.dart';
 import '../otpverification/widget/custom_back.dart';
 import '../otpverification/widget/custon_button.dart';
-import 'controllers/contryselexted.controller.dart';
+import 'controllers/contryselected.controller.dart';
 
 class ContryselextedScreen extends GetView<ContryselextedController> {
   const ContryselextedScreen({Key? key}) : super(key: key);

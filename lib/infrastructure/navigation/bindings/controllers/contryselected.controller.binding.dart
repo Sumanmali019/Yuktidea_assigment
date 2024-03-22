@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../../../../presentation/contryselexted/controllers/contryselexted.controller.dart';
+import '../../../../presentation/contryselected/controllers/contryselected.controller.dart';
 
 class ContryselextedControllerBinding extends Bindings {
   @override

@@ -5,7 +5,7 @@ import 'package:yuktidea_assessment/presentation/home/widgets/cutsom_widget.dart
 import 'package:yuktidea_assessment/presentation/otpverification/widget/custom_back.dart';
 import 'package:yuktidea_assessment/presentation/otpverification/widget/custon_button.dart';
 
-import '../contryselexted/contryselexted.screen.dart';
+import '../contryselected/contryselected.screen.dart';
 
 class HomeScreen extends GetView<HomeController> {
   const HomeScreen({Key? key}) : super(key: key);
