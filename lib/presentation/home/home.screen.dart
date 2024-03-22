@@ -5,6 +5,8 @@ import 'package:yuktidea_assessment/presentation/home/widgets/cutsom_widget.dart
 import 'package:yuktidea_assessment/presentation/otpverification/widget/custom_back.dart';
 import 'package:yuktidea_assessment/presentation/otpverification/widget/custon_button.dart';
 
+import '../contryselexted/contryselexted.screen.dart';
+
 class HomeScreen extends GetView<HomeController> {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -78,11 +80,11 @@ class HomeScreen extends GetView<HomeController> {
                         var selectedItem = controller.contrylist.firstWhere(
                           (item) => item['isSelected'] == true,
                         );
-                        // Perform some action based on the selected item
-                        print('Selected Item: ${selectedItem['text']}');
-                        // Here, add your action, like navigation or dialog display
+
+                        print('Selected: ${selectedItem['text']}');
+                        Get.to(ContryselextedScreen());
                       }
-                    : null, // Disable button tap when no item is selected
+                    : null,
                 color: isItemSelected
                     ? const Color.fromRGBO(249, 211, 180, 1)
                     : const Color.fromRGBO(249, 211, 180, 0.4),

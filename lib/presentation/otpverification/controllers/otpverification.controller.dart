@@ -77,8 +77,8 @@ class OtpverificationController extends GetxController {
     }
   }
 
-  void requestOtp(String telCode) async {
-    final success = await apiService.requestOtp(telCode, phoneController.text);
+  void studentrequestOtp(String telCode) async {
+    final success = await apiService.studnetrequestOtp(telCode, phoneController.text);
     isLoadingphone(false);
     if (success && isFormValid.value) {
       Get.to(() => OtpInputScreen(), arguments: {'telCode': telCode});

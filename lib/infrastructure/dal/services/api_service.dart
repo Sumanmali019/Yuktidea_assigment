@@ -38,7 +38,7 @@ class ApiService {
     }
   }
 
-  Future<bool> requestOtp(String telCode, String phone) async {
+  Future<bool> studnetrequestOtp(String telCode, String phone) async {
     final response = await http.post(
       Uri.parse('$_baseUrl/student/login'),
       headers: {'Accept': 'application/json'},

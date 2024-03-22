@@ -143,7 +143,7 @@ class EnterPhoneNumberScreen extends StatelessWidget {
               Obx(() => CustomButton(
                     buttonText: 'Get OTP',
                     onTap: controller.isFormValid.value
-                        ? () => controller.requestOtp(telCode)
+                        ? () => controller.studentrequestOtp(telCode)
                         : null,
                     color: controller.isFormValid.value
                         ? const Color.fromRGBO(249, 211, 180, 1)
